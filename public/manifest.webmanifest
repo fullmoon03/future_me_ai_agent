@@ -1,0 +1,25 @@
+{
+  "name": "미래의 나",
+  "short_name": "미래의 나",
+  "description": "미래의 내가 오늘의 나를 설득한다.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF4EA",
+  "theme_color": "#FAF4EA",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

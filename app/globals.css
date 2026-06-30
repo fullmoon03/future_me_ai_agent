@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+ * 디자인 시스템 (섹션 6 — 하드 스펙)
+ * 노을빛 따뜻함. 차가운 생산성 블루 금지. 평평하고 부드러운 라운드.
+ */
+@theme {
+  /* 배경 / 카드 */
+  --color-cream: #faf4ea; /* 앱 배경 */
+  --color-card: #ffffff; /* 미래의 나 카드 */
+  --color-cardborder: #f0d9ce;
+
+  /* 텍스트 */
+  --color-warmdark: #3e2a1e; /* 본문 */
+  --color-header: #5a3a28; /* 헤더 */
+  --color-subtle: #9a8772; /* 보조 */
+
+  /* 강조 */
+  --color-coral: #d8753f;
+  --color-coraldark: #993c1d;
+
+  /* 사용자 말풍선 */
+  --color-userbubble: #efe3d2;
+  --color-usertext: #4a3422;
+
+  /* 타임라인 시점 배경 (시간 흐름에 따라 더워짐) */
+  --color-h30: #faeeda; /* 30분 뒤 — 옅은 앰버 */
+  --color-hnight: #eceaf6; /* 오늘 밤 — 저녁 라벤더 */
+  --color-hweek: #faece7; /* 1주 뒤 — 코랄 */
+  --color-hmonth: #fbeaf0; /* 1개월 뒤 — 핑크 */
+  --color-h3month: #fac775; /* 3개월 뒤 — 꽉 찬 앰버, 도착 */
+
+  /* 자산 카테고리 액센트 */
+  --color-asset-stamina: #f0b254; /* 체력 */
+  --color-asset-focus: #e9a6c2; /* 집중 */
+  --color-asset-recovery: #9c93e0; /* 회복 */
+  --color-asset-order: #7fcbb0; /* 정리 */
+
+  /* 서체 — 미래의 나는 명조(serif), UI는 산세리프 */
+  --font-sans: var(--font-noto-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-myeongjo), "Nanum Myeongjo", serif;
+}
+
+html,
+body {
+  background-color: var(--color-cream);
+  color: var(--color-warmdark);
+  font-family: var(--font-sans);
+  /* 과한 볼드 금지 — 기본 400 */
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 모바일 우선: 부드러운 스크롤, 가로 오버플로 방지 */
+* {
+  box-sizing: border-box;
+}
