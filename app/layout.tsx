@@ -1,9 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import { Noto_Sans_KR, Noto_Serif_KR } from "next/font/google";
 import RegisterSW from "@/components/RegisterSW";
 import "./globals.css";
 
-// 전체 서체 — 고딕(Noto Sans KR). 명조는 사용하지 않는다.
+// 본문·제목·카드 — 읽기 좋은 명조(Noto Serif KR). 편지/저널 감성.
+const notoSerif = Noto_Serif_KR({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-noto-serif",
+  display: "swap",
+});
+
+// 버튼·작은 UI 라벨 — 단정한 산세리프(Noto Sans KR).
 const notoSans = Noto_Sans_KR({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
@@ -30,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F8F7F3",
+  themeColor: "#FAFAFC",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -43,7 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={notoSans.variable}>
+    <html
+      lang="ko"
+      className={`${notoSerif.variable} ${notoSans.variable}`}
+    >
       <body>
         {children}
         <RegisterSW />

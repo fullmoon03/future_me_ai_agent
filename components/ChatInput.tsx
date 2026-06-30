@@ -27,7 +27,7 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
           type="button"
           disabled={disabled}
           onClick={() => onSend("완료했어요")}
-          className="flex items-center justify-center gap-1.5 rounded-xl bg-coral px-3 py-2.5 text-[14px] font-semibold text-card transition-colors hover:bg-coralhover disabled:opacity-50"
+          className="flex items-center justify-center gap-1.5 rounded-xl bg-coral px-3 py-2.5 font-sans text-[14px] font-semibold text-card transition-colors hover:bg-coralhover disabled:opacity-50"
         >
           <CheckIcon />
           완료했어요
@@ -36,7 +36,7 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
           type="button"
           disabled={disabled}
           onClick={() => onSend("그래도 하기 싫어")}
-          className="rounded-xl border border-cardborder bg-card px-3 py-2.5 text-[14px] font-medium text-coraldark transition-colors hover:border-coral disabled:opacity-50"
+          className="rounded-xl border border-coral bg-card px-3 py-2.5 font-sans text-[14px] font-medium text-coraldark transition-colors hover:bg-corallight disabled:opacity-50"
         >
           그래도 하기 싫어
         </button>
@@ -78,13 +78,13 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
           rows={1}
           placeholder="오늘 미루고 싶은 일이 있나요?"
           disabled={disabled}
-          className="max-h-32 flex-1 resize-none rounded-2xl border border-cardborder bg-card px-4 py-2.5 text-[15px] leading-relaxed text-warmdark placeholder:text-subtle focus:border-coral focus:outline-none disabled:opacity-60"
+          className="max-h-32 flex-1 resize-none rounded-2xl border border-cardborder bg-card px-4 py-2.5 font-sans text-[15px] leading-relaxed text-warmdark placeholder:text-subtle focus:border-coral focus:outline-none disabled:opacity-60"
         />
         <button
           type="button"
           onClick={submit}
           disabled={disabled || !value.trim()}
-          className="h-11 shrink-0 rounded-2xl bg-coral px-4 text-[15px] font-medium text-card transition-colors hover:bg-coralhover disabled:opacity-40"
+          className="h-11 shrink-0 rounded-2xl bg-coral px-4 font-sans text-[15px] font-medium text-card transition-colors hover:bg-coralhover disabled:opacity-40"
         >
           보내기
         </button>

@@ -51,15 +51,16 @@ export function pickScene(keyword: string, domain: Domain): SceneCategory {
 }
 
 // 색상 토큰 (illustration 내부 사용)
+// 화이트 + 라벤더 톤 (주황/테라코타 없음)
 const C = {
-  cream: "#F4EFE6",
-  border: "#E6D8CC",
-  coral: "#D9784A",
-  amber: "#E0A04E",
-  dark: "#5A4A3C",
-  pink: "#D995B4",
-  green: "#74BFA4",
-  violet: "#9890D4",
+  cream: "#F4F2FA",
+  border: "#E6E2F2",
+  coral: "#8F86D9", // primary lavender
+  amber: "#A59BE8", // light lavender (앰버 대체)
+  dark: "#6E6880", // muted purple-gray 아웃라인
+  pink: "#C79BC9", // mauve
+  green: "#93C2B0", // muted sage
+  violet: "#8FA0D6", // periwinkle
 };
 
 type SVGProps = { className?: string };

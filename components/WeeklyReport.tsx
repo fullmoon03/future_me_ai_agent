@@ -87,8 +87,10 @@ export default function WeeklyReport() {
 
   return (
     <div className="flex-1 overflow-y-auto px-5 py-6">
-      <div className="mb-1 text-[12px] text-subtle">{weekRangeLabel()}</div>
-      <h2 className="mb-6 text-[19px] font-bold tracking-tight text-header">
+      <div className="mb-1 font-sans text-[12px] text-subtle">
+        {weekRangeLabel()}
+      </div>
+      <h2 className="mb-6 text-[20px] font-medium tracking-tight text-header">
         이번 주의 나
       </h2>
 
@@ -121,16 +123,14 @@ export default function WeeklyReport() {
         <>
           {/* 쌓인 미래 자산 — 누적값(달성률 아님) */}
           <div className="mb-7">
-            <h3 className="mb-3 text-[13px] font-semibold text-header">
+            <h3 className="mb-3 font-sans text-[13px] font-semibold text-header">
               쌓인 미래 자산
             </h3>
             <div className="space-y-2.5">
               {activeCategories.map((c) => (
                 <div key={c} className="flex items-center gap-2.5">
                   <span className={`h-3 w-3 rounded-full ${ASSET_COLOR[c]}`} />
-                  <span className="font-sans text-[14px] text-warmdark">
-                    {c}
-                  </span>
+                  <span className="text-[14px] text-warmdark">{c}</span>
                   <span className="ml-auto font-sans text-[13px] text-subtle">
                     {"·".repeat(Math.min(totals[c], 8))}{" "}
                     {totals[c] > 8 ? `${totals[c]}` : ""}
@@ -157,7 +157,7 @@ export default function WeeklyReport() {
               <button
                 type="button"
                 onClick={() => fetchSummary(true)}
-                className="font-sans text-[13px] text-coraldark underline-offset-2 hover:underline"
+                className="font-sans text-[13px] font-medium text-coraldark underline-offset-2 hover:underline"
               >
                 이번 주 돌아보기
               </button>

@@ -1,57 +1,62 @@
 @import "tailwindcss";
 
 /*
- * 디자인 시스템 — 따뜻하지만 세련된 AI 성장 앱.
- * 감성 일기장 느낌을 줄이고, 차분한 톤 + 고딕 서체로 현대적인 인상.
+ * 디자인 시스템 — "미래의 나에게 받는 편지".
+ * 화이트 + muted lavender 중심. 차분하고 세련된 저널/레터 감성.
+ * 본문은 명조(serif), 버튼·작은 라벨만 산세리프.
+ *
+ * 참고: 포인트 컬러 토큰명은 과거 호환을 위해 coral* 을 유지하지만,
+ * 실제 값은 전부 라벤더(Primary)다. (주황/테라코타 제거)
  */
 @theme {
   /* 배경 / 카드 */
-  --color-cream: #f8f7f3; /* 앱 배경 — 소프트 아이보리 그레이 */
-  --color-card: #ffffff; /* 카드 */
-  --color-cardborder: #e6d8cc; /* 연한 베이지/그레이 보더 */
+  --color-cream: #fafafc; /* 앱 배경 — 거의 화이트 */
+  --color-card: #ffffff;
+  --color-cardborder: #e6e2f2; /* 연한 라벤더 그레이 보더 */
 
-  /* 텍스트 — 진한 브라운 대신 차콜 */
-  --color-warmdark: #2f2a25; /* 본문(거의 블랙) */
-  --color-header: #2f2a25; /* 헤더 */
-  --color-subtle: #8a7d70; /* 보조 */
+  /* 텍스트 */
+  --color-warmdark: #25242a; /* 본문 — 거의 블랙 차콜 */
+  --color-header: #25242a;
+  --color-subtle: #8a8496; /* 보조 — 라벤더 그레이 */
 
-  /* 강조 — 딥 코랄(테라코타) */
-  --color-coral: #d9784a; /* Primary */
-  --color-coralhover: #c96a3e; /* Primary hover */
-  --color-coraldark: #b85f36; /* 강조 텍스트 */
+  /* 강조 — muted lavender (Primary) */
+  --color-coral: #8f86d9; /* Primary */
+  --color-coralhover: #7e74ce; /* Primary hover */
+  --color-coraldark: #6e63c0; /* 강조 텍스트(라벤더) */
+  --color-corallight: #f4f2ff; /* Primary light — 아이콘 슬롯/배경 */
 
-  /* 사용자 말풍선 — 따뜻하지만 차분하게 */
-  --color-userbubble: #efeae2;
-  --color-usertext: #2f2a25;
+  /* 사용자 말풍선 — 아주 연한 라벤더 */
+  --color-userbubble: #f0eef8;
+  --color-usertext: #25242a;
 
-  /* 타임라인 시점 배경 — 낮은 채도로 통일, 미래로 갈수록 살짝 따뜻 */
-  --color-h30: #fbf3e8; /* 30분 뒤 */
-  --color-hnight: #eeedf3; /* 오늘 밤 — 뮤트 라벤더그레이 */
-  --color-hweek: #f7ece6; /* 1주 뒤 */
-  --color-hmonth: #f6ebef; /* 1개월 뒤 — 뮤트 핑크 */
-  --color-h3month: #f4dcb0; /* 3개월 뒤 — 부드러운 앰버(도착) */
+  /* 타임라인 시점 배경 — 화이트→연보라로 은은하게 통일(알록달록 X) */
+  --color-h30: #fbfafe;
+  --color-hnight: #f7f5fd;
+  --color-hweek: #f3f1fb;
+  --color-hmonth: #efebf8;
+  --color-h3month: #e9e4f4; /* 도착 — 가장 라벤더 */
 
-  /* 자산 카테고리 액센트 (점 표시용) */
-  --color-asset-stamina: #e0a04e; /* 체력 */
-  --color-asset-focus: #d995b4; /* 집중 */
-  --color-asset-recovery: #9890d4; /* 회복 */
-  --color-asset-order: #74bfa4; /* 정리 */
+  /* 자산 카테고리 액센트 — 쿨/뮤트(주황 없음) */
+  --color-asset-stamina: #a59be8;
+  --color-asset-focus: #c79bc9;
+  --color-asset-recovery: #8fa0d6;
+  --color-asset-order: #93c2b0;
 
-  /* 서체 — 전부 고딕(Noto Sans KR). 명조 사용하지 않음.
-     Future Me 카드는 같은 고딕에 부드러운 weight만 적용. */
+  /* 서체 — 명조(Noto Serif KR) 기반, 산세리프(Noto Sans KR)는 UI 라벨용 */
+  --font-serif:
+    var(--font-noto-serif), "Nanum Myeongjo", "Apple SD Gothic Neo", serif;
   --font-sans:
-    var(--font-noto-sans), "Pretendard", system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-noto-sans), system-ui, sans-serif;
+    var(--font-noto-sans), system-ui, -apple-system, sans-serif;
 }
 
 html,
 body {
   background-color: var(--color-cream);
   color: var(--color-warmdark);
-  font-family: var(--font-sans);
+  /* 기본은 명조 — 편지 같은 감성 */
+  font-family: var(--font-serif);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.01em; /* 고딕을 더 또렷하고 현대적으로 */
 }
 
 * {

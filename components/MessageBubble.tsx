@@ -1,11 +1,14 @@
 import type { ChatMessage } from "@/lib/types";
 
-// 쪽지/편지 느낌 아이콘 (시계 아이콘 대체)
+// 카드 핀 라벨 연도 (약 1~3년 뒤). 서버/클라 동일 계산.
+const FUTURE_YEAR = new Date().getFullYear() + 1;
+
+// 쪽지/편지 느낌 아이콘
 function LetterIcon() {
   return (
     <svg
-      width="14"
-      height="14"
+      width="13"
+      height="13"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -22,7 +25,7 @@ function LetterIcon() {
 
 export default function MessageBubble({ message }: { message: ChatMessage }) {
   if (message.role === "user") {
-    // 사용자 말풍선 — 고딕, 차분한 웜 뉴트럴
+    // 사용자 말풍선 — 아주 연한 라벤더
     return (
       <div className="flex justify-end">
         <div className="flex max-w-[80%] flex-col items-end gap-1.5">
@@ -44,20 +47,20 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
     );
   }
 
-  // 미래의 나 카드 — 고딕, 부드러운 weight. 깔끔한 현대적 카드.
+  // 미래의 나 카드 — 흰 배경, 라벤더 그레이 보더, 은은한 그림자, 명조 본문(편지 느낌)
   return (
     <div className="flex justify-start">
-      <div className="max-w-[88%] rounded-2xl rounded-tl-md border border-cardborder bg-card px-4 py-3.5 shadow-[0_1px_3px_rgba(47,42,37,0.04)]">
-        {/* 핀 라벨 — 편지 아이콘 + "미래의 나로부터" */}
-        <div className="mb-2 flex items-center gap-1.5">
-          <span className="text-coral">
+      <div className="max-w-[88%] rounded-2xl rounded-tl-md border border-cardborder bg-card px-4 py-3.5 shadow-[0_2px_10px_rgba(143,134,217,0.06)]">
+        {/* 핀 라벨 — 연보라 원 배경의 편지 아이콘 + "2027년의 나로부터" */}
+        <div className="mb-2 flex items-center gap-2">
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-corallight text-coral">
             <LetterIcon />
           </span>
-          <span className="text-[11px] font-medium tracking-wide text-subtle">
-            미래의 나로부터
+          <span className="font-sans text-[11px] font-medium tracking-wide text-subtle">
+            {FUTURE_YEAR}년의 나로부터
           </span>
         </div>
-        <p className="whitespace-pre-line text-[15px] font-normal leading-[1.7] text-warmdark">
+        <p className="whitespace-pre-line text-[15.5px] leading-[1.85] text-warmdark">
           {message.text}
         </p>
       </div>
