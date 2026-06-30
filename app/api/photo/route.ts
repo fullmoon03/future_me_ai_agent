@@ -73,10 +73,16 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(payload);
   } catch (err) {
-    console.error("[/api/photo] 실패:", err);
-    return NextResponse.json(
-      { error: "사진을 해석하지 못했어요. 잠시 후 다시 시도해 주세요." },
-      { status: 502 },
-    );
+    // 일시 과부하 등으로 vision이 실패해도 따뜻하게 폴백.
+    console.error("[/api/photo] 실패(폴백 응답):", err);
+    const reply: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: "future_me",
+      kind: "coaching",
+      text: "사진 잘 받았어. 지금은 천천히 들여다보는 중이라 조금 뒤에 다시 보내줄래? 이 모습도 너의 한 부분이야, 괜찮아.",
+      createdAt: Date.now(),
+    };
+    const payload: PhotoResponse = { reply };
+    return NextResponse.json(payload);
   }
 }

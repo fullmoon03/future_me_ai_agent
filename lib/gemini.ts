@@ -36,7 +36,7 @@ function getClient(): GoogleGenAI {
 async function withRetry<T>(
   fn: () => Promise<T>,
   retries = 1,
-  delayMs = 600,
+  delayMs = 900,
 ): Promise<T> {
   let lastErr: unknown;
   for (let attempt = 0; attempt <= retries; attempt++) {
@@ -47,7 +47,8 @@ async function withRetry<T>(
       const status = (err as { status?: number })?.status;
       const transient = status === 503 || status === 429 || status === 500;
       if (!transient || attempt === retries) throw err;
-      await new Promise((r) => setTimeout(r, delayMs));
+      // 지수적 백오프 (10초 예산 내). 과부하 서버에 잠깐 여유를 준다.
+      await new Promise((r) => setTimeout(r, delayMs * (attempt + 1)));
     }
   }
   throw lastErr;
