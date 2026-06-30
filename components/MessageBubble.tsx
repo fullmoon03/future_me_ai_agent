@@ -1,8 +1,5 @@
 import type { ChatMessage } from "@/lib/types";
 
-// 카드 핀 라벨 연도 (약 1~3년 뒤). 서버/클라 동일 계산.
-const FUTURE_YEAR = new Date().getFullYear() + 1;
-
 // 쪽지/편지 느낌 아이콘
 function LetterIcon() {
   return (
@@ -57,7 +54,7 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
             <LetterIcon />
           </span>
           <span className="font-sans text-[11px] font-medium tracking-wide text-subtle">
-            {FUTURE_YEAR}년의 나로부터
+            미래의 나로부터
           </span>
         </div>
         <p className="whitespace-pre-line text-[15.5px] leading-[1.85] text-warmdark">
