@@ -52,14 +52,14 @@ export function pickScene(keyword: string, domain: Domain): SceneCategory {
 
 // 색상 토큰 (illustration 내부 사용)
 const C = {
-  cream: "#FAF4EA",
-  border: "#F0D9CE",
-  coral: "#D8753F",
-  amber: "#F0B254",
-  dark: "#5A3A28",
-  pink: "#E9A6C2",
-  green: "#7FCBB0",
-  violet: "#9C93E0",
+  cream: "#F4EFE6",
+  border: "#E6D8CC",
+  coral: "#D9784A",
+  amber: "#E0A04E",
+  dark: "#5A4A3C",
+  pink: "#D995B4",
+  green: "#74BFA4",
+  violet: "#9890D4",
 };
 
 type SVGProps = { className?: string };

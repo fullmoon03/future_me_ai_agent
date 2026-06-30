@@ -87,10 +87,10 @@ export default function WeeklyReport() {
 
   return (
     <div className="flex-1 overflow-y-auto px-5 py-6">
-      <div className="mb-1 font-sans text-[12px] text-subtle">
-        {weekRangeLabel()}
-      </div>
-      <h2 className="mb-6 font-serif text-[20px] text-header">이번 주의 나</h2>
+      <div className="mb-1 text-[12px] text-subtle">{weekRangeLabel()}</div>
+      <h2 className="mb-6 text-[19px] font-bold tracking-tight text-header">
+        이번 주의 나
+      </h2>
 
       {/* 한 주의 흐름 — 점 7개. 안 한 날은 흐린 회색으로 조용히 (비난 없음) */}
       <div className="mb-7">
@@ -111,7 +111,7 @@ export default function WeeklyReport() {
       {ready && assets.length === 0 ? (
         // 빈 상태 — 죄책감 없이 부드럽게
         <div className="mt-10 rounded-2xl border border-cardborder bg-card px-5 py-6">
-          <p className="font-serif text-[15px] leading-[1.8] text-warmdark">
+          <p className="text-[14px] leading-[1.75] text-warmdark">
             이번 주엔 아직 쌓인 게 없네. 괜찮아.
             <br />
             아주 작은 행동 하나면 충분해 — 그걸 해내고 &ldquo;했어&rdquo;라고 말해줘.
@@ -121,7 +121,7 @@ export default function WeeklyReport() {
         <>
           {/* 쌓인 미래 자산 — 누적값(달성률 아님) */}
           <div className="mb-7">
-            <h3 className="mb-3 font-sans text-[13px] font-medium text-header">
+            <h3 className="mb-3 text-[13px] font-semibold text-header">
               쌓인 미래 자산
             </h3>
             <div className="space-y-2.5">
@@ -142,15 +142,15 @@ export default function WeeklyReport() {
 
           {/* 미래의 나의 "이번 주 핵심 변화" (8.5) — 명조 */}
           <div className="rounded-2xl border border-cardborder bg-card px-4 py-4">
-            <div className="mb-2 font-sans text-[11px] font-medium text-subtle">
+            <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-subtle">
               이번 주 핵심 변화
             </div>
             {loadingSummary && !summary ? (
-              <p className="font-sans text-[13px] text-subtle">
+              <p className="text-[13px] text-subtle">
                 미래의 내가 이번 주를 돌아보는 중…
               </p>
             ) : summary ? (
-              <p className="whitespace-pre-line font-serif text-[16px] leading-[1.75] text-warmdark">
+              <p className="whitespace-pre-line text-[15px] leading-[1.7] text-warmdark">
                 {summary}
               </p>
             ) : (

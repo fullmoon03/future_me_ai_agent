@@ -1,22 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_KR, Nanum_Myeongjo } from "next/font/google";
+import { Noto_Sans_KR } from "next/font/google";
 import RegisterSW from "@/components/RegisterSW";
 import "./globals.css";
 
-// UI 서체 — 산세리프 (라벨·버튼·시간)
+// 전체 서체 — 고딕(Noto Sans KR). 명조는 사용하지 않는다.
 const notoSans = Noto_Sans_KR({
   subsets: ["latin"],
-  weight: ["400", "500"], // 굵기는 400/500 두 단계만
+  weight: ["400", "500", "700"],
   variable: "--font-noto-sans",
-  display: "swap",
-});
-
-// 미래의 나 목소리 — 명조(serif).
-// "시스템 알림이 아니라 누군가의 목소리"라는 느낌을 만든다.
-const myeongjo = Nanum_Myeongjo({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-myeongjo",
   display: "swap",
 });
 
@@ -39,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAF4EA",
+  themeColor: "#F8F7F3",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -52,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={`${notoSans.variable} ${myeongjo.variable}`}>
+    <html lang="ko" className={notoSans.variable}>
       <body>
         {children}
         <RegisterSW />

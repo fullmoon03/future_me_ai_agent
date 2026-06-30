@@ -1,44 +1,47 @@
 @import "tailwindcss";
 
 /*
- * 디자인 시스템 (섹션 6 — 하드 스펙)
- * 노을빛 따뜻함. 차가운 생산성 블루 금지. 평평하고 부드러운 라운드.
+ * 디자인 시스템 — 따뜻하지만 세련된 AI 성장 앱.
+ * 감성 일기장 느낌을 줄이고, 차분한 톤 + 고딕 서체로 현대적인 인상.
  */
 @theme {
   /* 배경 / 카드 */
-  --color-cream: #faf4ea; /* 앱 배경 */
-  --color-card: #ffffff; /* 미래의 나 카드 */
-  --color-cardborder: #f0d9ce;
+  --color-cream: #f8f7f3; /* 앱 배경 — 소프트 아이보리 그레이 */
+  --color-card: #ffffff; /* 카드 */
+  --color-cardborder: #e6d8cc; /* 연한 베이지/그레이 보더 */
 
-  /* 텍스트 */
-  --color-warmdark: #3e2a1e; /* 본문 */
-  --color-header: #5a3a28; /* 헤더 */
-  --color-subtle: #9a8772; /* 보조 */
+  /* 텍스트 — 진한 브라운 대신 차콜 */
+  --color-warmdark: #2f2a25; /* 본문(거의 블랙) */
+  --color-header: #2f2a25; /* 헤더 */
+  --color-subtle: #8a7d70; /* 보조 */
 
-  /* 강조 */
-  --color-coral: #d8753f;
-  --color-coraldark: #993c1d;
+  /* 강조 — 딥 코랄(테라코타) */
+  --color-coral: #d9784a; /* Primary */
+  --color-coralhover: #c96a3e; /* Primary hover */
+  --color-coraldark: #b85f36; /* 강조 텍스트 */
 
-  /* 사용자 말풍선 */
-  --color-userbubble: #efe3d2;
-  --color-usertext: #4a3422;
+  /* 사용자 말풍선 — 따뜻하지만 차분하게 */
+  --color-userbubble: #efeae2;
+  --color-usertext: #2f2a25;
 
-  /* 타임라인 시점 배경 (시간 흐름에 따라 더워짐) */
-  --color-h30: #faeeda; /* 30분 뒤 — 옅은 앰버 */
-  --color-hnight: #eceaf6; /* 오늘 밤 — 저녁 라벤더 */
-  --color-hweek: #faece7; /* 1주 뒤 — 코랄 */
-  --color-hmonth: #fbeaf0; /* 1개월 뒤 — 핑크 */
-  --color-h3month: #fac775; /* 3개월 뒤 — 꽉 찬 앰버, 도착 */
+  /* 타임라인 시점 배경 — 낮은 채도로 통일, 미래로 갈수록 살짝 따뜻 */
+  --color-h30: #fbf3e8; /* 30분 뒤 */
+  --color-hnight: #eeedf3; /* 오늘 밤 — 뮤트 라벤더그레이 */
+  --color-hweek: #f7ece6; /* 1주 뒤 */
+  --color-hmonth: #f6ebef; /* 1개월 뒤 — 뮤트 핑크 */
+  --color-h3month: #f4dcb0; /* 3개월 뒤 — 부드러운 앰버(도착) */
 
-  /* 자산 카테고리 액센트 */
-  --color-asset-stamina: #f0b254; /* 체력 */
-  --color-asset-focus: #e9a6c2; /* 집중 */
-  --color-asset-recovery: #9c93e0; /* 회복 */
-  --color-asset-order: #7fcbb0; /* 정리 */
+  /* 자산 카테고리 액센트 (점 표시용) */
+  --color-asset-stamina: #e0a04e; /* 체력 */
+  --color-asset-focus: #d995b4; /* 집중 */
+  --color-asset-recovery: #9890d4; /* 회복 */
+  --color-asset-order: #74bfa4; /* 정리 */
 
-  /* 서체 — 미래의 나는 명조(serif), UI는 산세리프 */
-  --font-sans: var(--font-noto-sans), system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-myeongjo), "Nanum Myeongjo", serif;
+  /* 서체 — 전부 고딕(Noto Sans KR). 명조 사용하지 않음.
+     Future Me 카드는 같은 고딕에 부드러운 weight만 적용. */
+  --font-sans:
+    var(--font-noto-sans), "Pretendard", system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-noto-sans), system-ui, sans-serif;
 }
 
 html,
@@ -46,12 +49,11 @@ body {
   background-color: var(--color-cream);
   color: var(--color-warmdark);
   font-family: var(--font-sans);
-  /* 과한 볼드 금지 — 기본 400 */
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em; /* 고딕을 더 또렷하고 현대적으로 */
 }
 
-/* 모바일 우선: 부드러운 스크롤, 가로 오버플로 방지 */
 * {
   box-sizing: border-box;
 }

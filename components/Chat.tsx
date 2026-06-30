@@ -39,6 +39,13 @@ export default function Chat() {
     });
   }, [messages, loading]);
 
+  // 헤더의 비우기 아이콘에서 보내는 이벤트 수신
+  useEffect(() => {
+    const onClear = () => reset();
+    window.addEventListener("future-me:clear", onClear);
+    return () => window.removeEventListener("future-me:clear", onClear);
+  }, []);
+
   async function send(text: string) {
     if (loading) return;
     setError(null);
@@ -150,18 +157,6 @@ export default function Chat() {
                 createdAt: Date.now(),
               }}
             />
-          </div>
-        )}
-
-        {messages.length > 0 && (
-          <div className="flex justify-center pb-1">
-            <button
-              type="button"
-              onClick={reset}
-              className="font-sans text-[12px] text-subtle underline-offset-2 hover:underline"
-            >
-              대화 비우기
-            </button>
           </div>
         )}
 

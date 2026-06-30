@@ -20,9 +20,30 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
   }
 
   return (
-    <div className="border-t border-cardborder bg-cream px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-3">
-      {/* 저항을 떳떳한 선택지로 — 두 버튼 동등한 비중 (섹션 6) */}
-      <div className="mb-2.5 grid grid-cols-2 gap-2">
+    <div className="border-t border-cardborder bg-cream px-3 pb-[max(10px,env(safe-area-inset-bottom))] pt-2.5">
+      {/* 핵심 CTA — 완료했어요(미래자산 적립) / 그래도 하기 싫어 */}
+      <div className="mb-2 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => onSend("완료했어요")}
+          className="flex items-center justify-center gap-1.5 rounded-xl bg-coral px-3 py-2.5 text-[14px] font-semibold text-card transition-colors hover:bg-coralhover disabled:opacity-50"
+        >
+          <CheckIcon />
+          완료했어요
+        </button>
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => onSend("그래도 하기 싫어")}
+          className="rounded-xl border border-cardborder bg-card px-3 py-2.5 text-[14px] font-medium text-coraldark transition-colors hover:border-coral disabled:opacity-50"
+        >
+          그래도 하기 싫어
+        </button>
+      </div>
+
+      {/* 입력 줄 — 카메라(보조) + 입력창 + 보내기 */}
+      <div className="flex items-end gap-2">
         <input
           ref={fileRef}
           type="file"
@@ -31,28 +52,20 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
           onChange={(e) => {
             const f = e.target.files?.[0];
             if (f) onPhoto(f);
-            e.target.value = ""; // 같은 파일 재선택 허용
+            e.target.value = "";
           }}
         />
         <button
           type="button"
+          aria-label="사진 보내기"
+          title="사진 보내기"
           disabled={disabled}
           onClick={() => fileRef.current?.click()}
-          className="rounded-xl border border-cardborder bg-card px-3 py-2.5 font-sans text-[13px] font-medium text-coraldark disabled:opacity-50"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cardborder bg-card text-subtle transition-colors hover:text-coral disabled:opacity-50"
         >
-          사진 보내기
+          <CameraIcon />
         </button>
-        <button
-          type="button"
-          disabled={disabled}
-          onClick={() => onSend("그래도 하기 싫어")}
-          className="rounded-xl border border-cardborder bg-card px-3 py-2.5 font-sans text-[13px] font-medium text-coraldark disabled:opacity-50"
-        >
-          그래도 하기 싫어
-        </button>
-      </div>
 
-      <div className="flex items-end gap-2">
         <textarea
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -63,19 +76,56 @@ export default function ChatInput({ onSend, onPhoto, disabled }: Props) {
             }
           }}
           rows={1}
-          placeholder="하기 싫은 일이 있어?"
+          placeholder="오늘 미루고 싶은 일이 있나요?"
           disabled={disabled}
-          className="max-h-32 flex-1 resize-none rounded-2xl border border-cardborder bg-card px-4 py-2.5 font-sans text-[15px] leading-relaxed text-warmdark placeholder:text-subtle focus:border-coral focus:outline-none disabled:opacity-60"
+          className="max-h-32 flex-1 resize-none rounded-2xl border border-cardborder bg-card px-4 py-2.5 text-[15px] leading-relaxed text-warmdark placeholder:text-subtle focus:border-coral focus:outline-none disabled:opacity-60"
         />
         <button
           type="button"
           onClick={submit}
           disabled={disabled || !value.trim()}
-          className="shrink-0 rounded-2xl bg-coral px-4 py-2.5 font-sans text-[15px] font-medium text-card transition-opacity disabled:opacity-40"
+          className="h-11 shrink-0 rounded-2xl bg-coral px-4 text-[15px] font-medium text-card transition-colors hover:bg-coralhover disabled:opacity-40"
         >
           보내기
         </button>
       </div>
     </div>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20 6L9 17l-5-5" />
+    </svg>
+  );
+}
+
+function CameraIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
   );
 }

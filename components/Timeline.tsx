@@ -29,8 +29,8 @@ export default function Timeline({
   return (
     <div className="flex justify-start">
       <div className="w-full max-w-[92%]">
-        <p className="mb-2 ml-1 font-sans text-[11px] text-subtle">
-          이 작은 행동이 쌓이면 —
+        <p className="mb-2 ml-1 text-[12px] font-medium text-subtle">
+          이 행동이 쌓이면 생기는 미래
         </p>
         <div>
           {cards.map((card, i) => {
@@ -63,10 +63,10 @@ export default function Timeline({
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="font-sans text-[11px] font-medium text-subtle">
+                      <div className="text-[11px] font-medium text-subtle">
                         {card.when}
                       </div>
-                      <p className="mt-0.5 font-serif text-[14px] leading-[1.6] text-warmdark">
+                      <p className="mt-0.5 text-[13.5px] leading-[1.55] text-warmdark">
                         {card.scene}
                       </p>
                     </div>
