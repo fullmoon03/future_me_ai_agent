@@ -1,5 +1,26 @@
 import type { ChatMessage } from "@/lib/types";
 
+// 경고 아이콘 — 투명 배경, 빨간 원형 outline, 안에 빨간 느낌표
+function WarningIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#D9534F"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v4.5" />
+      <circle cx="12" cy="16.2" r="0.6" fill="#D9534F" stroke="none" />
+    </svg>
+  );
+}
+
 // 쪽지/편지 느낌 아이콘
 function LetterIcon() {
   return (
@@ -39,6 +60,28 @@ export default function MessageBubble({ message }: { message: ChatMessage }) {
               {message.text}
             </div>
           )}
+        </div>
+      </div>
+    );
+  }
+
+  // 토큰 부족/응답 중단 — 경고 상태 행 + 재시도 본문. 카드 전체를 빨갛게 하지 않고
+  // border만 아주 연한 붉은 회색으로 구분 (화이트+연보라 톤과 자연스럽게).
+  if (message.kind === "stopped") {
+    return (
+      <div className="flex justify-start">
+        <div className="max-w-[88%] rounded-2xl rounded-tl-md border border-[#E9D6D6] bg-card px-4 py-3.5 shadow-[0_2px_10px_rgba(217,83,79,0.05)]">
+          {/* 상단 경고 상태 행 — 작고 보조적인 기술 정보 (sans) */}
+          <div className="mb-2 flex items-center gap-1.5">
+            <WarningIcon />
+            <span className="font-sans text-[11px] font-medium tracking-wide text-[#B66B68]">
+              Response stopped: token limit reached
+            </span>
+          </div>
+          {/* 본문 — 기존 명조 톤 유지 */}
+          <p className="whitespace-pre-line text-[15.5px] leading-[1.85] text-warmdark">
+            {message.text}
+          </p>
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { processInput } from "@/lib/agent";
 import { hasGeminiKey } from "@/lib/gemini";
+import { STOPPED_MESSAGE } from "@/lib/prompts";
 import type { ChatMessage, ChatResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -72,13 +73,13 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json(payload);
   } catch (err) {
-    // 무료 티어 일시 과부하 등으로 LLM이 실패해도 빨간 에러 대신 따뜻하게 폴백(섹션 3 톤 유지).
-    console.error("[/api/chat] 처리 실패(폴백 응답):", err);
+    // 예기치 못한 실패 → 토큰 부족/응답 중단 경고 카드로 안내.
+    console.error("[/api/chat] 처리 실패(응답 중단):", err);
     const reply: ChatMessage = {
       id: crypto.randomUUID(),
       role: "future_me",
-      kind: "coaching",
-      text: "지금은 내 목소리가 잘 안 들리나 봐. 잠깐 숨 고르고 한 번만 더 말 걸어줄래? 네가 여기 온 것만으로도 충분해.",
+      kind: "stopped",
+      text: STOPPED_MESSAGE,
       createdAt: Date.now(),
     };
     const payload: ChatResponse = {

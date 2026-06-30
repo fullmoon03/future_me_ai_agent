@@ -28,7 +28,8 @@ export type MessageKind =
   | "min_action" // Minimum Action Mode
   | "timeline" // 타임라인 카드 (M2)
   | "completion" // 완료 인정
-  | "crisis"; // 안전 분기 (섹션 10.5)
+  | "crisis" // 안전 분기 (섹션 10.5)
+  | "stopped"; // 토큰 부족/응답 중단 (경고 카드)
 
 export type MessageRole = "user" | "future_me" | "system";
 

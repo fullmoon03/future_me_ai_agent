@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { analyzePhoto, generateTimeline, hasGeminiKey } from "@/lib/gemini";
+import { STOPPED_MESSAGE } from "@/lib/prompts";
 import type { ChatMessage, PhotoResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -73,13 +74,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(payload);
   } catch (err) {
-    // 일시 과부하 등으로 vision이 실패해도 따뜻하게 폴백.
-    console.error("[/api/photo] 실패(폴백 응답):", err);
+    // vision 실패(토큰 부족/과부하 등) → 응답 중단 경고 카드.
+    console.error("[/api/photo] 실패(응답 중단):", err);
     const reply: ChatMessage = {
       id: crypto.randomUUID(),
       role: "future_me",
-      kind: "coaching",
-      text: "사진 잘 받았어. 지금은 천천히 들여다보는 중이라 조금 뒤에 다시 보내줄래? 이 모습도 너의 한 부분이야, 괜찮아.",
+      kind: "stopped",
+      text: STOPPED_MESSAGE,
       createdAt: Date.now(),
     };
     const payload: PhotoResponse = { reply };

@@ -1,5 +1,5 @@
 import { runAgentTurn, generateTimeline } from "./gemini";
-import { CRISIS_MESSAGE } from "./prompts";
+import { CRISIS_MESSAGE, STOPPED_MESSAGE } from "./prompts";
 import {
   localClassify,
   localMessage,
@@ -33,18 +33,38 @@ export interface AgentResult {
 }
 
 // API(토큰/한도/장애)로 LLM이 안 될 때, 로컬 키워드 분류 + 준비된 콘텐츠로 응답을 구성.
+// 위기·완료·강한 저항, 그리고 도메인이 잡힌 일반 코칭은 그대로 답변을 제공한다.
+// 단, 도메인을 못 잡은 일반 코칭(기타)은 보여줄 적절한 답이 없으므로 '응답 중단' 경고 카드로 안내한다.
 function buildLocalResult(userText: string, context?: string): AgentResult {
   const classification = localClassify(userText, context);
   const kind = deriveKind(classification);
-  const text =
-    kind === "crisis"
-      ? CRISIS_MESSAGE
-      : localMessage(kind, classification.domain);
 
-  const result: AgentResult = { classification, kind, text };
-  if (kind === "completion") result.asset = localAsset(classification.domain);
-  if (kind === "coaching") result.timeline = localTimeline(classification.domain);
-  return result;
+  if (kind === "crisis") {
+    return { classification, kind, text: CRISIS_MESSAGE };
+  }
+  if (kind === "completion") {
+    return {
+      classification,
+      kind,
+      text: localMessage(kind, classification.domain),
+      asset: localAsset(classification.domain),
+    };
+  }
+  if (kind === "min_action") {
+    return { classification, kind, text: localMessage(kind, classification.domain) };
+  }
+
+  // coaching
+  if (classification.domain === "기타") {
+    // 적절한 폴백 답이 없는 경우 → 토큰 부족/응답 중단 경고 카드
+    return { classification, kind: "stopped", text: STOPPED_MESSAGE };
+  }
+  return {
+    classification,
+    kind,
+    text: localMessage(kind, classification.domain),
+    timeline: localTimeline(classification.domain),
+  };
 }
 
 // 입력당 LLM 최대 2회 (분류+메시지 1회, 타임라인 1회).
