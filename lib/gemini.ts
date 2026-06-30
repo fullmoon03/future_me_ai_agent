@@ -31,7 +31,9 @@ function getClient(): GoogleGenAI {
   return ai;
 }
 
-// 무료 티어는 일시적 503(과부하)/429(쿼터)가 잦다. 짧게 1회 재시도.
+// 일시적 과부하(503/500)에만 1회 재시도. 잠깐 뒤 회복되므로 의미가 있다.
+// 429(분당/일일 한도 초과)는 재시도해도 곧바로 회복되지 않으므로 재시도하지 않고
+// 즉시 던진다 — 불필요한 추가 호출로 한도를 더 깎는 것을 막는다(무료 티어 절약).
 // Vercel Hobby 10초 예산 안에 들도록 지연을 작게 유지.
 async function withRetry<T>(
   fn: () => Promise<T>,
@@ -45,9 +47,8 @@ async function withRetry<T>(
     } catch (err) {
       lastErr = err;
       const status = (err as { status?: number })?.status;
-      const transient = status === 503 || status === 429 || status === 500;
-      if (!transient || attempt === retries) throw err;
-      // 지수적 백오프 (10초 예산 내). 과부하 서버에 잠깐 여유를 준다.
+      const retryable = status === 503 || status === 500; // 429 제외
+      if (!retryable || attempt === retries) throw err;
       await new Promise((r) => setTimeout(r, delayMs * (attempt + 1)));
     }
   }
