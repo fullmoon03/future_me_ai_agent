@@ -1,5 +1,11 @@
 import { runAgentTurn, generateTimeline } from "./gemini";
 import { CRISIS_MESSAGE } from "./prompts";
+import {
+  localClassify,
+  localMessage,
+  localTimeline,
+  localAsset,
+} from "./fallback";
 import type {
   AssetCategory,
   Classification,
@@ -26,13 +32,37 @@ export interface AgentResult {
   asset?: AssetCategory;
 }
 
+// API(토큰/한도/장애)로 LLM이 안 될 때, 로컬 키워드 분류 + 준비된 콘텐츠로 응답을 구성.
+function buildLocalResult(userText: string, context?: string): AgentResult {
+  const classification = localClassify(userText, context);
+  const kind = deriveKind(classification);
+  const text =
+    kind === "crisis"
+      ? CRISIS_MESSAGE
+      : localMessage(kind, classification.domain);
+
+  const result: AgentResult = { classification, kind, text };
+  if (kind === "completion") result.asset = localAsset(classification.domain);
+  if (kind === "coaching") result.timeline = localTimeline(classification.domain);
+  return result;
+}
+
 // 입력당 LLM 최대 2회 (분류+메시지 1회, 타임라인 1회).
 // 위기 신호면 메시지를 결정적 안전 응답으로 대체(섹션 10.5).
+// API 실패 시에는 로컬 폴백으로 도메인별 메시지+타임라인을 그대로 제공.
 export async function processInput(
   userText: string,
   context?: string,
 ): Promise<AgentResult> {
-  const turn = await runAgentTurn(userText, context);
+  let turn;
+  try {
+    turn = await runAgentTurn(userText, context);
+  } catch (err) {
+    // ① 호출 실패(429/503/네트워크 등) → 로컬 폴백
+    console.error("[agent] runAgentTurn 실패 → 로컬 폴백 사용:", err);
+    return buildLocalResult(userText, context);
+  }
+
   const classification: Classification = {
     domain: turn.domain,
     intensity: turn.intensity,
@@ -47,22 +77,23 @@ export async function processInput(
   } else if (turn.message) {
     text = turn.message;
   } else {
-    text = "오늘 그 마음, 그대로 받아들일게. 아주 작은 한 걸음만 같이 떠올려보자.";
+    // 빈 메시지면 도메인별 로컬 메시지로 보강.
+    text = localMessage("coaching", classification.domain);
   }
 
   const result: AgentResult = { classification, kind, text };
 
-  // 완료 분기면 적립할 자산 카테고리를 전달 (추가 호출 없음 — ①호출에서 받음).
   if (kind === "completion") {
     result.asset = turn.asset;
   }
 
-  // 두 번째 호출 — 일반 코칭일 때만 타임라인. 실패해도 코칭은 살린다.
+  // 두 번째 호출 — 일반 코칭일 때만 타임라인. 실패하면 로컬 타임라인으로 대체.
   if (kind === "coaching") {
     try {
       result.timeline = await generateTimeline(userText, classification.domain);
     } catch (err) {
-      console.error("[agent] 타임라인 생성 실패(코칭은 유지):", err);
+      console.error("[agent] 타임라인 실패 → 로컬 타임라인 사용:", err);
+      result.timeline = localTimeline(classification.domain);
     }
   }
 
