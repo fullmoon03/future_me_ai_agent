@@ -36,8 +36,8 @@ export default function App() {
         )}
       </header>
 
-      {/* 탭 — 연보라 언더라인 */}
-      <nav className="flex gap-5 border-b border-cardborder px-5">
+      {/* 탭 — 연보라 언더라인 (가운데 정렬) */}
+      <nav className="flex justify-center gap-8 border-b border-cardborder px-5">
         <Tab active={view === "chat"} onClick={() => setView("chat")}>
           오늘의 나
         </Tab>
